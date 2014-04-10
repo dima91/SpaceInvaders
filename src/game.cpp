@@ -83,7 +83,7 @@ bool game_t::moveRight (int off)
 /* *** */
 void game_t::print ()
 {
-   int i=0;
+   int i=0, type;
 
    // Clean screen
    erase ();
@@ -95,21 +95,33 @@ void game_t::print ()
    // Print bullets && enemies
    for (i=0;i<nCol;i++)
    {
-      bullet_t *app1= bullist[i]->begin ();
       enemy_t *app0=enelist[i]->begin ();
+      bullet_t *app1= bullist[i]->begin ();
 
       while (app1!=NULL || app0!=NULL)
       {
+	 if (app0!=NULL)
+	 {
+	    if (!(app0->isDie ()))
+	    {
+	       type= app0->getType();
+	       if (type==0)
+		  mvprintw (app0->getY(), app0->getX(), "B");
+	       else if (type==1)
+		  mvprintw (app0->getY(), app0->getX(), "S");
+	       else if (type==2)
+		  mvprintw (app0->getY(), app0->getX(), "A");
+	       else if (type==3)
+		  mvprintw (app0->getY(), app0->getX(), "R");
+
+	       app0=enelist[i]->next ();
+	    }
+	 }
+
 	 if (app1!=NULL)
 	 {
 	    mvprintw (app1->getY(), app1->getX(), "*");
 	    app1= bullist[i]->next();
-	 }
-	 if (app0!=NULL)
-	 {
-	    if (!(app0->isDie ()))
-	       mvprintw (app0->getY(), app0->getX(), "@");
-	    app0=enelist[i]->next ();
 	 }
       }
    }      
@@ -141,7 +153,11 @@ void game_t::moveEnemies ()
    int i=0;
 
    for (i=0;i<nCol;i++)
+   {
       enelist[i]->moveEnemies();
+      if (((enelist[i]->begin ()) != NULL) && ((enelist[i]->getIter()->getY())>nLin))
+	 enelist[i]->removeFirst ();
+   }
 }
 /* *** */
 /* *** */

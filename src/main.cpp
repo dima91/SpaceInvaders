@@ -77,9 +77,9 @@ int main ()
       game->checkCollision ();
       
       // ..(4)..
-      if ((rand() % 7436)==0)
+      if ((rand() % 10759)==0)
 	 // I create new enemy
-	 game->addEnemy (((rand ())%COLS), 1, 1 /*((rand())%4)*/);
+	 game->addEnemy (((rand ())%COLS), 1, ((rand())%2) /*((rand())%4)*/);
       
 
       // ..(5).. print on stdscr and refresh

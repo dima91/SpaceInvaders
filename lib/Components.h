@@ -14,23 +14,23 @@
 
 
 /** \brief Speed of bullets shooted by cannon */
-const int BULLET_SPEED= 100000;
+const double BULLET_SPEED= 0.05;
 /** \brief Start life of spacecrafts */
-const int SPACECRAFT_LIFE= 3;
+const double SPACECRAFT_LIFE= 3;
 /** \brief Speed of spacecrafts */
-const int SPACECRAFT_SPEED= 1.0;
+const double SPACECRAFT_SPEED= 1.0;
 /** \brief Start life of big spacecrafts */
-const int BIGSPACECRAFT_LIFE= 7;
+const double BIGSPACECRAFT_LIFE= 7;
 /** \brief Speed of big spacecrafts */
-const int BIGSPACECRAFT_SPEED= 1.7;
+const double BIGSPACECRAFT_SPEED= 2;
 /** \brief Start life of asteroids */
-const int ASTEROID_LIFE= 10;
+const double ASTEROID_LIFE= 10;
 /** \brief Speed of asteroids */
-const int ASTEROID_SPEED= 0.5;
+const double ASTEROID_SPEED= 0.5;
 /** \brief Start life of rocks */
-const int ROCK_LIFE= 5;
+const double ROCK_LIFE= 5;
 /** \brief Speed of rocks */
-const int ROCK_SPEED= 2.0;
+const double ROCK_SPEED= 2.0;
 
 
 
@@ -378,6 +378,8 @@ class enemy_t
       clock_t timeStart;
       /** \brief The enemy's life */
       int life;
+      /** \brief Flag that identifies type of enemy (0_big spacecraft  1_spacecraft  2_asteroid  3_rock) */
+      int type;
       /** \brief Pointer to function thath specifics bheaviour of this enemy */
       bool (*bheaviour) (clock_t *, int *);
 
@@ -446,6 +448,10 @@ class enemy_t
        * \retru nfalse Otherwise
        */
       bool decreaseLife (int dec);
+
+      /** \brief Return type of enemy (0_big spacecraft  1_spacecraft  2_asteroid  3_rock)
+       */
+      int getType ();
 };
 
 

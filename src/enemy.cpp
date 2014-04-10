@@ -38,6 +38,8 @@ enemy_t::enemy_t (int px, int py, enemy_t *prev, enemy_t *next, int type)
       bheaviour= &rock;
       life= ROCK_SPEED;
    }
+
+   this->type= type;
 }
 /* *** */
 /* *** */
@@ -136,7 +138,13 @@ bool enemy_t::decreaseLife (int dec)
 
    return true;
 }
-
+/* *** */
+/* *** */
+/* *** */
+int enemy_t::getType ()
+{
+   return type;
+}
 
 
 
@@ -167,6 +175,23 @@ bool enemy_t::decreaseLife (int dec)
 // BHEAVIOURS
 bool enemy_t::bigSpacecraft (clock_t *st, int *y)
 {
+   clock_t timeStart= *st, timeTmp;
+   double diff=0;
+
+   // Calculates the time spent from last check
+   timeTmp= clock ();
+   diff= (double) timeTmp - (double) timeStart;
+   diff= diff/CLOCKS_PER_SEC;
+
+   // Check if it have to move
+   if (diff>= (double) BIGSPACECRAFT_SPEED)
+   {
+      *st= timeTmp;
+      *y= *y+1;
+
+      return true;
+   }
+
    return false;
 }
 /* *** */

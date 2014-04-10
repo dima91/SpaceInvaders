@@ -73,6 +73,7 @@ bool bullet_t::move ()
    // Calculates the time spent from last check
    timeTmp= clock ();
    diff= ((double) timeTmp - (double) timeStart);
+   diff= diff/CLOCKS_PER_SEC;
 
    // Check if it have to move
    if (diff>= (double) BULLET_SPEED)
