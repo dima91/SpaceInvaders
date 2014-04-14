@@ -108,11 +108,11 @@ void game_t::print ()
 	       if (type==0)
 		  mvprintw (app0->getY(), app0->getX(), "B");
 	       else if (type==1)
-		  mvprintw (app0->getY(), app0->getX(), "S");
+		  mvprintw (app0->getY(), app0->getX(), "s");
 	       else if (type==2)
 		  mvprintw (app0->getY(), app0->getX(), "A");
 	       else if (type==3)
-		  mvprintw (app0->getY(), app0->getX(), "R");
+		  mvprintw (app0->getY(), app0->getX(), "+");
 
 	       app0=enelist[i]->next ();
 	    }
@@ -191,4 +191,32 @@ bool game_t::checkCollision ()
 bool game_t::addEnemy (int px, int py, int type)
 {
    return enelist[px]->addEnemy (px, py, type);
+}
+/* *** */
+/* *** */
+/* *** */
+bool game_t::checkCollision (int px, int py)
+{
+   enemy_t *app= enelist[px]->begin ();
+
+   while (app!=NULL && (app->getY () > py))
+      app= enelist[px]->next ();
+
+   if (app!=NULL && app->getY () == py)
+      return true;
+
+   return false;
+}
+/* *** */
+/* *** */
+/* *** */
+bool game_t::checkCannonCollision ()
+{
+   int x= cannon->getX();
+   int y= cannon->getY();
+
+   if ((checkCollision (x-1, y)) || (checkCollision (x, y)) || (checkCollision (x+1, y)) || (checkCollision (x, y-1)))
+      return true;
+
+   return false;
 }

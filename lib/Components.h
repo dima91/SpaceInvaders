@@ -10,27 +10,32 @@
 #define _COMPONENTS_H
 
 #include <ctime>
+#include <curses.h>
 
 
 
 /** \brief Speed of bullets shooted by cannon */
 const double BULLET_SPEED= 0.05;
+
 /** \brief Start life of spacecrafts */
 const double SPACECRAFT_LIFE= 3;
 /** \brief Speed of spacecrafts */
 const double SPACECRAFT_SPEED= 1.0;
+
 /** \brief Start life of big spacecrafts */
 const double BIGSPACECRAFT_LIFE= 7;
 /** \brief Speed of big spacecrafts */
 const double BIGSPACECRAFT_SPEED= 2;
+
 /** \brief Start life of asteroids */
-const double ASTEROID_LIFE= 10;
+const double ASTEROID_LIFE= 5;
 /** \brief Speed of asteroids */
-const double ASTEROID_SPEED= 0.5;
+const double ASTEROID_SPEED= 1.5;
+
 /** \brief Start life of rocks */
-const double ROCK_LIFE= 5;
+const double ROCK_LIFE= 1;
 /** \brief Speed of rocks */
-const double ROCK_SPEED= 2.0;
+const double ROCK_SPEED= 0.15;
 
 
 
@@ -452,6 +457,12 @@ class enemy_t
       /** \brief Return type of enemy (0_big spacecraft  1_spacecraft  2_asteroid  3_rock)
        */
       int getType ();
+
+      /** \brief Swap this enemy with previous enemy */
+      void swapPrev ();
+
+      /** \brief Swap this enemy with next enemy */
+      void swapNext ();
 };
 
 

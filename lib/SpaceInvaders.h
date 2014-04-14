@@ -92,6 +92,21 @@ class game_t
       /** \brief Check collision between bullets and enemies (check if first elements of bullist and enelist (with same abscisse) collide) */
       bool checkCollision ();
 
+      /** \brief Check collision in point passed as argument
+       * \param px Abscisse of point where must check collision
+       * \param py Ordinate of point where must check collision
+       *
+       * \return true If there are collision
+       * \return false Otherwise
+       */
+      bool checkCollision (int px, int py);
+
+      /** \brief Check if there are collision between cannon and enemies
+       * \return true If there are collision
+       * \return false Otherwise
+       */
+      bool checkCannonCollision ();
+
       /** \brief Add an enemy to enelist
        * \param px Abscisse of enemy
        * \param py Ordinate of enemy

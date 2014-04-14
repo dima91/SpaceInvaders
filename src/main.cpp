@@ -6,6 +6,7 @@
 #include "./SpaceInvaders.h"
 #include "Components.h"
 #include <cstdlib>
+#include <iostream>
 
 
 /** \brief Function that print on stdscr start messge */
@@ -45,7 +46,7 @@ int main ()
    direction=0;
 
    // GAME LOOP:
-   // (1.a)..GET A COMMAND______(1.b)..PARSE COMMAND______(2.a)..MOVE BULLIST______(2.b)..MOVE ENEMIES______(3)..CHECK COLLISION______(4)..GENERATE ENEMIES______(5)..PRINT
+   // (1.a)..GET A COMMAND______(1.b)..PARSE COMMAND______(2.a)..MOVE BULLIST______(2.b)..MOVE ENEMIES______(3.a-b)..CHECK COLLISION______(4)..GENERATE ENEMIES______(5)..PRINT
    while (!end)
    {
       // ..(1.a)..
@@ -66,6 +67,8 @@ int main ()
 	 case (int) 'q':
 	    end=TRUE;
 	    break ;
+	 case (int) 'p':
+	    break;
       }
 
       // ..(2.a)..
@@ -73,13 +76,25 @@ int main ()
       // ..(2.b)..
       game->moveEnemies ();
 
-      // ..(3)..
+      // ..(3.a)..
+      // Check if there are collision between bullets and enemies and, possibly, manages them
       game->checkCollision ();
+
+      // ..(3.b)..
+      // Check if there are collision between enemies and cannon
+      if (game->checkCannonCollision ())
+      {
+	 erase ();
+	 mvprintw (20, 20, "************** SEI MORTO!!!!!! **************");
+	 refresh ();
+	 napms (3000);
+	 end=TRUE;
+      }
       
       // ..(4)..
-      if ((rand() % 10759)==0)
+      if ((rand() % 19813)==0)
 	 // I create new enemy
-	 game->addEnemy (((rand ())%COLS), 1, ((rand())%2) /*((rand())%4)*/);
+	 game->addEnemy (((rand ())%(COLS)), 1, ((rand())%4));
       
 
       // ..(5).. print on stdscr and refresh
@@ -88,8 +103,6 @@ int main ()
       refresh ();
    }
 
-
-   //napms(5000);
 
    endwin ();
    return 0;

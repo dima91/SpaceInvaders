@@ -126,6 +126,56 @@ void enelist_t::moveEnemies ()
 
    if ((start->move ())==true)
       this->modified= true;
+
+   // I reorder list
+   // List is empty or has one element
+   if (start==NULL || (start->getNext()==NULL))
+      return ;
+
+   enemy_t *app0=start, *app1=start->getNext();
+
+   // List has two elements
+   if (start->getNext()->getNext()==NULL)
+   {
+      // First element must be swapped
+      if (start->getY() < start->getNext()->getY())
+      {
+	 app0->swapNext();
+	 start=app1;
+	 end=app0;
+      }
+      return ;
+   }
+
+   // First element must be swapped
+   if (start->getY() < start->getNext()->getY())
+   {
+      start->swapNext ();
+      start= app1;
+   }
+
+   app0=start;
+
+   while (app0->getNext()->getNext()!=NULL)
+   {
+      if ((app0->getY()) < (app0->getNext()->getY()))
+      {
+	 // Swap current enemy (app0) with next --> app0 becomes "next" and app0->next becomes "prev"
+	 app0->swapNext ();
+	 app0=app0->getPrev ();
+      }
+      
+      app0=app0->getNext();
+   }
+
+   // Penultimate element must be swapped
+   if ((app0->getY()) < (app0->getNext()->getY()))
+   {
+      app0->swapNext ();
+      end= app0;
+   }
+
+   return ;
 }
 /* *** */
 /* *** */

@@ -36,7 +36,7 @@ enemy_t::enemy_t (int px, int py, enemy_t *prev, enemy_t *next, int type)
    else
    {
       bheaviour= &rock;
-      life= ROCK_SPEED;
+      life= ROCK_LIFE;
    }
 
    this->type= type;
@@ -223,6 +223,23 @@ bool enemy_t::spacecraft (clock_t *st, int *y)
 /* *** */
 bool enemy_t::asteroid (clock_t *st, int *y)
 {
+   clock_t timeStart= *st, timeTmp;
+   double diff=0;
+
+   // Calculates the time spent from last check
+   timeTmp= clock ();
+   diff= (double) timeTmp - (double) timeStart;
+   diff= diff/CLOCKS_PER_SEC;
+
+   // Check if it have to move
+   if (diff>= (double) ASTEROID_SPEED)
+   {
+      *st= timeTmp;
+      *y= *y+1;
+
+      return true;
+   }
+
    return false;
 }
 /* *** */
@@ -230,5 +247,62 @@ bool enemy_t::asteroid (clock_t *st, int *y)
 /* *** */
 bool enemy_t::rock (clock_t *st, int *y)
 {
+   clock_t timeStart= *st, timeTmp;
+   double diff=0;
+
+   // Calculates the time spent from last check
+   timeTmp= clock ();
+   diff= (double) timeTmp - (double) timeStart;
+   diff= diff/CLOCKS_PER_SEC;
+
+   // Check if it have to move
+   if (diff>= (double) ROCK_SPEED)
+   {
+      *st= timeTmp;
+      *y= *y+1;
+
+      return true;
+   }
+
    return false;
+}
+/* *** */
+/* *** */
+/* *** */
+void enemy_t::swapPrev ()
+{
+   enemy_t *app=this->prev;
+
+   // Remove this from list
+   if (this->next!=NULL)
+      this->next->setPrev(this->prev);
+   // If i have to swap this with previous element, i supposed that exists element "prev"!!!
+   this->prev->setNext (this->next);
+
+   this->next=this->prev;
+   this->prev= app->getPrev ();
+
+   if (app->getPrev()!=NULL)
+      app->getPrev()->setNext(this);
+   app->setPrev (this);
+}
+/* *** */
+/* *** */
+/* *** */
+void enemy_t::swapNext ()
+{
+   enemy_t *app=this->next;
+
+   // Remove this from list
+   if (this->prev!=NULL)
+      this->prev->setNext (this->next);
+   // If i have to swap this with next element, i suposed that exists element "next"!!
+   this->next->setPrev (this->prev);
+
+   this->prev=this->next;
+   this->next= app->getNext ();
+
+   if (app->getNext()!=NULL)
+      app->getNext()->setPrev(this);
+   app->setNext(this);
 }

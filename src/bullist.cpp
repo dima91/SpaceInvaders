@@ -123,7 +123,6 @@ void bullist_t::moveBullet ()
    // This command must be deleted?!?!?!?!?!?!
    if ((start->getY ()) <=0)
       removeFirst ();
-
 }
 /* *** */
 /* *** */
