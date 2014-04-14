@@ -3,6 +3,7 @@
  * \brief Main file for the project "Space Invaders"
  * \author Luca Di Mauro
  */
+
 #include "./SpaceInvaders.h"
 #include "Components.h"
 #include <cstdlib>
